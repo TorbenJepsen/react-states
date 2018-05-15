@@ -15,13 +15,24 @@ class App extends Component {
 
   handleChange = (event) => {
     // console.log('input was changed');
-    console.log('event.target', event.target.value)
+    // console.log('event.target', event.target.value)
     // this.state.user = event.target.value;
-    this.setState({user: { name: event.target.value, city: this.state.user.city }});
+    this.setState({
+      user: { 
+        ...this.state.user, 
+        name: event.target.value, 
+        
+      }
+    });
   }
 
   handleCityChange = (event) => {
-    this.setState({user: { city: event.target.value, name: this.state.user.name}});
+    this.setState({
+      user: {
+        ...this.state.user, 
+        city: event.target.value, 
+      }
+    });
   }
 
   buttonClick = () => {
