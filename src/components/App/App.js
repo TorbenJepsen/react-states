@@ -1,53 +1,63 @@
 import React, { Component } from 'react';
 
+const emptyUser = {
+  name: '', 
+  city: '',
+  zip: '',
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {user: {name: '', city: ''}} ;
-    
-
-   
-
+    this.state = {
+      user: emptyUser,
+    };
     // makes 'this' in handlechange the same as this in the constructor
     // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (event) => {
-    // console.log('input was changed');
-    // console.log('event.target', event.target.value)
-    // this.state.user = event.target.value;
-    this.setState({
-      user: { 
-        ...this.state.user, 
-        name: event.target.value, 
-        
-      }
-    });
-  }
+  handleChangeFor = propertyName => event => {
+      this.setState({
+        user: {
+          ...this.state.user,
+          [propertyName]: event.target.value,
+        }
+      });
+    }
 
-  handleCityChange = (event) => {
-    this.setState({
-      user: {
-        ...this.state.user, 
-        city: event.target.value, 
-      }
-    });
-  }
+  // handleChangeFor = (propertyName) => {
+  //   return (event) => {
+  //     this.setState({
+  //       user: {
+  //         ...this.state.user,
+  //         [propertyName]: event.target.value,
+  //       }
+  //     });
+  //   }
+  // }
 
-  buttonClick = () => {
+
+  handleSubmit = (event) => {
+    event.preventDefault();
     console.log(this.state.user);
+    this.setState({
+      user: emptyUser,
+    });
   }
 
   render() {
     return (
       <div>
-        <p>User {this.state.user.name}</p>
-        <input onChange={this.handleChange} placeholder="username" />
-        <p>is from {this.state.user.city}</p>
-        <input onChange={this.handleCityChange} placeholder="city" />
-        <button onClick={this.buttonClick}> Submit </button>
+        <form onSubmit={this.handleSubmit}>
+        <input value={this.state.user.name} onChange={this.handleChangeFor('name')} placeholder="User Name" />
+        <input value={this.state.user.city}onChange={this.handleChangeFor('city')} placeholder="City Name" />
+        <input value={this.state.user.zip}onChange={this.handleChangeFor('zip')} placeholder="Zip Code" />
+        <p>{this.state.user.name} is from {this.state.user.city} {this.state.user.zip}</p>
+        <input type="submit" value="Click to Submit"/>
+        </form>
       </div>
+      
     );
   }
 }
